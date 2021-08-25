@@ -1,5 +1,18 @@
 # Assignment 1, Question 1
 
+This page, if uploaded to a GitHub repository, 
+will display images of files that are stored in this directory. 
+In particular, the command 
+```<img src="SUB_12_4_init_pass.png" width="500"/>```, 
+which is only visible in the text of this ```README.md``` file, 
+will display the image stored in the file 
+```SUB_12_4_init_pass.png```. 
+Following the instructions in Assignment 1, Question 1, 
+add the required files to this folder, 
+including the image files and this ```README.md``` file, 
+making sure that all files are precisely named, 
+and the images should appear below. 
+
 
 ## Case that Succeeded for Both Scripts
 
