@@ -17,7 +17,6 @@ software developers will be able to modify the same online repository.
 The code for a particular computing problem will be stored 
 in a GitHub *repository*, 
 which you can view in a browser.
-
 The repository for a course called "ECP3004S21" is shown here: 
 
 <img src="Images/GitHubBeforeRefresh.png" width="750"/>
@@ -28,9 +27,9 @@ where you will store your code for the activities in this course.
 
 There are three methods for accessing GitHub. 
 Each has its merits and suitable applications but, as is typical, 
-there is a trad-off between simplicity and functionality. 
+there is a trade-off between simplicity and functionality. 
 In particular, the three main approaches are outlined below:
-* *Through a Web Browser:* This is simple to user for beginning users, 
+* *Through a Web Browser:* This is a simple method for beginning users, 
   since it uses the point-and-click interface in a browser. 
   The downside is that it is not scalable, 
   in that each file must be uploaded manually, one at a time. 
@@ -50,12 +49,24 @@ In particular, the three main approaches are outlined below:
   interface for all forms of computing applications. 
   It is perhaps the least user-friendly method but it carries with it 
   full functionality to perform any operation in GitHub. 
-  This method is one that you should prefer to gain full mastery of the software. 
+  This method is one that you should prefer, in order to gain full mastery of the software. 
   Although you might not start with this approach, 
   you may gradually become more comfortable with this method as you gain experience. 
 
 
 ## GitHub Workflow
+
+When you write software on your computer, you can upload it to your repository in
+organized pieces. 
+First, you stage the changes by *adding* the changes to a batch of changes. 
+Next, when a collection of changes has been added, you *commit* the changes, 
+which records the set of changes in memory to store the version of your code
+at a certain checkpoint. 
+The committed files sit on your local machine, such as your laptop, 
+waiting to be added to the repository. 
+Typically, the new files and the changes to existing files, 
+The next step is to *push* your changes to the online repository, 
+which makes a permanant 
 
 <img src="Images/GitHub_Workflow.jpg" width="1000"/>
 
@@ -70,7 +81,7 @@ Follow the instructions in [Signing up for a new GitHub account](https://help.gi
 ### Start a new coding project
 
 If you want to create a new coding project, you should begin by creating a new repository. 
-A repository is a location in your user space that can be used to store youre code. 
+A repository is a location in your user space that can be used to store your code. 
 To initialize a new repository (or repo, for short), follow the instructions in [Create a repo](https://help.github.com/en/articles/create-a-repo).
 
 ### Minor edits to an existing project
@@ -88,16 +99,28 @@ shows how to modify an existing file (scroll down to see the example).
 ### Modify an existing project
 
 Several versions of your code can be stored at the same time in units called branches.
-The default storage space for a repository is called the master branch. Often, you will not want to make edits to the master branch when you are developing new code, so you would [create another branch of the repository](https://help.github.com/en/articles/creating-and-deleting-branches-within-your-repository).
+The default storage space for a repository is either called the master branch
+or the main branch. 
+In many cases, you will not want to make edits to the master branch when you are developing new code, so you would [create another branch of the repository](https://help.github.com/en/articles/creating-and-deleting-branches-within-your-repository).
 Once you have tested your code, it can be pulled to the master branch by [Creating a pull request](https://help.github.com/en/articles/creating-a-pull-request).
+When you are the only contributor, and the code is not running
+on a production environment, as for your assignments, 
+you might simply push to the main or master branch.
+
 
 ### Forking: Making your own copy of the repo
 
-For extensive edits, or to create a new, separate project built off an exisiting repository, you may want to [fork an existing repo](https://help.github.com/en/articles/fork-a-repo).
+For extensive edits, or to create a new, separate project built off an existing repository, you may want to [fork an existing repo](https://help.github.com/en/articles/fork-a-repo).
+This creates a new copy of the repository that is a separate repository in its own right, 
+which traces its origin back to the original repository. 
+You wouldn't use this option for a repository that you want to keep confidential, 
+since it cannot be kept private, since the creator of the original repository
+has access to it, to see how downstream users are using the code. 
+As such, you would not use it for your assignments. 
 
 ### Synching your fork
 
-If other software engineers have editied the original repository, you will want to update those changes to the version in your repository. This is called synching your fork. Some links to help with this are found in [Syncing a fork](https://help.github.com/en/articles/syncing-a-fork) and a concise version is found [here](https://gist.github.com/CristinaSolana/1885435). Notice, that this advice is stated in terms of the relevant commands through a terminal, instead of a point-and-click interface.
+If other software engineers have edited the original repository, you will want to update those changes to the version in your repository. This is called synching your fork. Some links to help with this are found in [Syncing a fork](https://help.github.com/en/articles/syncing-a-fork) and a concise version is found [here](https://gist.github.com/CristinaSolana/1885435). Notice, that this advice is stated in terms of the relevant commands through a terminal, instead of a point-and-click interface.
 With this approach, GitHub is a much more versatile tool.
 
 ## Working in Parallel in Separate Branches
@@ -105,7 +128,7 @@ With this approach, GitHub is a much more versatile tool.
 Instead of creating a forked version of another user's repo, 
 you can modify another version of the repo within the same repo. 
 The separate versions are called *branches*. 
-The default branch is called *master* but you may choose any name
+The default branch is called either *master* or *main* but you may choose any name
 for the new branch, which could refer to you (the user making the changes)
 or to the nature of the modifications to the code in the repo. 
 You must be a collaborator of the repo to modify the repo in this way. 
@@ -119,15 +142,22 @@ separate branches.
 <img src="Images/GitHub_Branches.jpeg" width="500"/>
 
 With separate users making simultaneous changes, it is best to do your work 
-locally and interact with the repo using the terminal window. 
-
+locally and interact with the repo using the terminal window, 
+which is a method described below. 
+Before then, we will explore the point-and-click interface of GitHub Desktop. 
 
 ## Version Control 2: Through GitHub Desktop
 
+This method is more efficient and it separates the act of creating content and uploading it.
+You should get in the habit of keeping the online repository up-to-date
+every time you create content on your local machine. 
+We will use this approach to complete, submit, and test the code in your assignments
+throughout the course.
+
 ## How to Update your Repo
 
-To complete and submit your assignments, you will want to 
-```commit``` and ```push``` changes to the repository, 
+The main steps are to 
+```add```, ```commit``` and ```push``` changes to the repository, 
 after making those changes in the corresponding files 
 on your local computer.
 
@@ -145,9 +175,11 @@ and approve your own access to the site through this particular computer.
 
 ### Cloning a Repository
 
-Once GitHub is open, the first step is *cloning* your repository. 
+Once GitHub Desktop is open, the first step is *cloning* your repository. 
 This makes a copy of the online repository and places it 
 in a folder on your computer. 
+Of course, the repository must already exist and you might 
+create one through the browser, as described above.
 Click on ```File -> Clone repository...```.
 
 <img src="Images/GitHubClone1.png" width="750"/>
@@ -240,6 +272,24 @@ on your local computer and ```commit``` and ```push``` again.
 Most of the work in computer programming is about
 making, detecting, and correcting errors, and GitHub is a useful
 tool designed to keep track of all your changes over time. 
+
+
+### Pulling Changes
+
+Often, there may be changes made to the repo that have not been made
+on your local machine. 
+This will occur if other programmers are contributing to the repo
+or if you made contributions from another computer. 
+You can *pull* changes from the remote repository to get your 
+local copy up-to-date with the remote repository. 
+
+
+<img src="Images/GitHubBeforePull.png" width="750"/>
+
+After pressing the "Pull" button, 
+you should see that the updates have been made to your local folder.
+You can check for the new files or updated "Last Modified" dates
+in an application such as "File Explorer" in Windows. 
 
 
 ## Version Control 3: Through a Terminal Window
