@@ -1,0 +1,4 @@
+I created this file through my browser with the same name as a file I created on my local repository. 
+This created a conflict that I eventually resolved by renaming the other file with my initials. 
+
+I editied it a second time online to demonstrate what happens when you attempt to push changes without an up-to-date version that includes the changes to the online repo. 

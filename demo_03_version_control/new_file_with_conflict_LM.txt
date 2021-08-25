@@ -1,0 +1,2 @@
+I created this file on my local repository with the same name as a file I created through my browser.
+This created a conflict that I eventually resolved by renaming this file with my initials.
