@@ -96,7 +96,7 @@ Last week, we saw that there are several *classes* of data in ```R```.
 
 ### Strings
 
-The variables above are character strings.
+The variables in our workspace above are character strings.
 
 ```R
 class(workspace_file_name)
@@ -119,7 +119,7 @@ And insert it in the place of the '%s' and outputs the full string.
 class(full_string)
 ```
 
-### Integer variabless
+### Integer variables
 
 Most characters can be used in variable names.
 ```R
