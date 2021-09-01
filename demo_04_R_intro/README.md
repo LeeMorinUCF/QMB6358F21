@@ -90,6 +90,7 @@ With good programming practices, you do not have to use this functionality becau
 ## Data Types
 
 Last week, we saw that there are several *classes* of data in ```R```. 
+
 <img src="Images/Rvariablesdata.jpg" width="500"/>
 
 
