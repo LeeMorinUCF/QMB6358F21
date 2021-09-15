@@ -100,7 +100,7 @@ do
     git status
     git add .
     git commit -m "Solutions and sample scripts for Assignment 2"
-    git push origin master
+    git push origin main
 
 
 

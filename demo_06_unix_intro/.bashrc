@@ -8,6 +8,9 @@
 # to the PATH environment variable so that you don't have
 # to add it yourself each time you call R. 
 export PATH="$PATH:/c/Program Files/R/R-4.0.2/bin"
+# You will have to modify this line if you have a different versin of R,
+# or if your instance of R is located elsewhere.
+
 
 # You can also set up aliases, i.e. shortcuts to other programs
 # so that you don't need to type as much.
