@@ -54,8 +54,8 @@ the command ```my_paper.t??``` would show ```my_paper.tex``` and ```my_paper.txt
 
 ## Navigation 
 
-For Windows users, not much file work can be done without Windows Explorer. 
-In UNIX, there are commands that perform any action that can be competed by right-clicking the mouse in Windows Explorer. 
+For Windows users, not much file work can be done without File Explorer. 
+In UNIX, there are commands that perform any action that can be competed by right-clicking the mouse in File Explorer. 
 
 ### Present working directory (Where are you?)
 
@@ -189,7 +189,7 @@ rm path/to/file/file_to_remove.txt
 ```
 
 CAUTION: In UNIX, again, there is no "Undo" command. You have to know what you are doing. 
-(However, if you are in a local copy of a git repository, you can revert to your last commit---see [demo_04_version_control](https://github.com/LeeMorinUCF/QMB6358F20/tree/master/demo_04_version_control).
+(However, if you are in a local copy of a git repository, you can revert to your last commit---see [demo_03_version_control](https://github.com/LeeMorinUCF/QMB6358F21/tree/main/demo_03_version_control).
 This is one of the many reasons to use version control software.
 
 
@@ -595,7 +595,7 @@ Similar compression operations are achieved with ```gzip``` or ```tar```.
 To *clone* a repo, i.e. download a copy to your local computer, use the ```clone``` option with ```git```:
 
 ```
-git clone https://github.com/LeeMorinUCF/QMB6358F20.git
+git clone https://github.com/LeeMorinUCF/QMB6358F21.git
 ```
 
 After you make some changes, you will want to upload them to the repo. 
@@ -624,7 +624,7 @@ Once a collection of files are staged to commit, you should add a message to des
 git commit -m "Describe your changes here"
 ```
 (The ```m``` option is not really an option because if you skip the message an old-fashioned text editor will pop up insisting that you include a message. 
-More about this in my rief description of the text editor called ```vim```.) 
+More about this in my brief description of the text editor called ```vim```.) 
 
 Before we move on to ```vim```, the changes in one or more ```commit```s can be ```push```ed to the online code repository with, for example,
 
@@ -632,7 +632,7 @@ Before we move on to ```vim```, the changes in one or more ```commit```s can be 
 git push origin master
 ```
 with ```origin``` representing the particular fork of the repository and ```master``` for the choice of the branch.  
-Again, see [demo_04_version_control](https://github.com/LeeMorinUCF/QMB6358F20/tree/master/demo_04_version_control) for more possibilities with ```git```.
+Again, see [demo_03_version_control](https://github.com/LeeMorinUCF/QMB6358F21/tree/main/demo_03_version_control) for more possibilities with ```git```.
 
 
 ## The Default Text Editor: ```vim```
@@ -681,7 +681,7 @@ To do all of this on a computer located somewhere else (a remote machine), use t
 ssh my_username@other.computer.address
 ```
 
-You will be prompted for you login credentials. 
+You will be prompted for your login credentials. 
 After you enter them, you will see a command prompt in your home directory. 
 Now you can do all of this on someone else's computer (provided you have access).
 
