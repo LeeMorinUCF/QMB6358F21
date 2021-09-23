@@ -165,6 +165,15 @@ class(cars_df$dist)
 
 
 
+# Tables
+
+table(cars_df[, 'speed'])
+
+table(cars_df[, 'speed'],
+      cars_df[, 'dist'])
+
+
+
 
 
 # The iris dataset has categorical variables.

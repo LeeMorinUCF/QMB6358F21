@@ -30,8 +30,7 @@ rm(list=ls(all=TRUE))
 
 
 # Set path for working directory.
-wd_path <- "~/Teaching/QMB6358_Fall_2020/GitRepos/QMB6358F20/demo_09_merging_in_R"
-
+wd_path <- "~/Teaching/QMB6358_Fall_2021/GitRepo/QMB6358F21/demo_08_merging_in_R"
 setwd(wd_path)
 
 
@@ -43,7 +42,7 @@ setwd(wd_path)
 # Read the tables.
 Employees <- read.csv('Employees.csv')
 Departments <- read.csv('Departments.csv')
-
+# Departments <- read.csv('Departments_copy.csv')
 
 
 
