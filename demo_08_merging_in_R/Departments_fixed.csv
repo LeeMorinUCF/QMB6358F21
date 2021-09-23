@@ -2,4 +2,8 @@ Department,DepartmentName,Manager
 11,Production,1
 12,Sales,4
 13,Marketing,5
+<<<<<<< HEAD
 14,Research,NA
+=======
+14,Research,NA
+>>>>>>> 9c72685db216c50473e204663dfed4d25f757e9a
