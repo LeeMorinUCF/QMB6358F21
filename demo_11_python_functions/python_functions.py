@@ -884,6 +884,97 @@ def pie_percent(n: int) -> int:
  
 
 
+##################################################
+## Testing Your Code Semiautomatically
+##################################################
+
+# The last step after designing the functions in your module is to test them. 
+# The ```doctest``` module allows us to run the tests that are included 
+# in the function docstrings. 
+
+# Suppose we had a function that converted degrees fahrenheit into celcius.
+
+def convert_to_celsius(fahrenheit):
+    """ (number) -> float
+
+    Return the number of Celsius degrees equivalent to fahrenheit degrees.
+
+    >>> convert_to_celsius(32)
+    0
+    >>> convert_to_celsius(-40)
+    -40
+    >>> convert_to_celsius(75)
+    23.88888888888889
+    """
+                        
+    return (fahrenheit - 32.0) * 5.0 / 9.0
+
+# We can test the function using the examples in the 
+
+import doctest
+doctest.testmod()
+# TestResults(failed=0, attempted=3)
+
+
+# This message tells us that three tests were attempted and none failed. 
+
+# As an experiment, suppose that we had made an error in our calculation.
+# Suppose that instead of ```(fahrenheit - 32.0) * 5.0 / 9.0``` we 
+# calculate ```fahrenheit - 32.0 * 5.0 / 9.0```. 
+# That is, we forgot to include the parentheses.
+
+# To test this, replace the definition of the ```convert_to_celsius```
+# function with this:
+
+
+def convert_to_celsius(fahrenheit):
+    """ (number) -> float
+
+    Return the number of Celsius degrees equivalent to fahrenheit degrees.
+
+    >>> convert_to_celsius(32)
+    0
+    >>> convert_to_celsius(-40)
+    -40
+    >>> convert_to_celsius(75)
+    23.88888888888889
+    """
+                        
+    return fahrenheit - 32.0 * 5.0 / 9.0
+
+
+
+
+# Then, when we run ```doctest``` on that module.
+
+
+
+import doctest
+doctest.testmod()
+
+# **********************************************************************
+# File "__main__", line 6, in __main__.convert_to_celsius
+# Failed example:
+#     convert_to_celsius(75)
+# Expected:
+#     23.88888888888889
+# Got:
+#     57.22222222222222
+# **********************************************************************
+# 1 items had failures:
+#    1 of   1 in __main__.convert_to_celsius
+# ***Test Failed*** 1 failures.
+# TestResults(failed=1, attempted=3)
+
+
+# This test failed. That is finds that the calculation returned an error.
+# When calculating ```convert_to_celsius(75)```, 
+# the expected answer is ```23.88888888888889``` 
+# but instead the calculation returns ```57.22222222222222```. 
+
+# We will use this testing approach in the script ```my_functions.py```
+# and in the scripts we will write in Assignment 5.
+
 
 
 

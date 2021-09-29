@@ -982,7 +982,7 @@ Then, when we run ```doctest``` on that module.
 
 
 ```python 
->>> import testmod
+>>> import doctest
 >>> doctest.testmod()
 **********************************************************************
 File "__main__", line 6, in __main__.convert_to_celsius
