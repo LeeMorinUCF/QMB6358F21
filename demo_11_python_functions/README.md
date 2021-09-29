@@ -1003,3 +1003,6 @@ This test failed. That is finds that the calculation returned an error.
 When calculating ```convert_to_celsius(75)```, 
 the expected answer is ```23.88888888888889``` 
 but instead the calculation returns ```57.22222222222222```. 
+
+We will use this testing approach in the script ```my_functions.py```
+and in the scripts we will write in Assignment 5.

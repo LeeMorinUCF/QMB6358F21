@@ -167,7 +167,7 @@ def main():
     
     
     print("#" + 50*"-")
-    print("# Testing with printed examples")
+    print("# Testing with printed examples.")
     print("#" + 50*"-")
     
     
@@ -235,6 +235,22 @@ def main():
     print(summarize_5_numbers(1, 1, 1, 1, 1))
     print(summarize_5_numbers(1, 2, 3, 4, 5))
     
+    print("#" + 50*"-")
+    print("# Testing complete.")
+    print("#" + 50*"-")
+    
+    
+
+if __name__== '__main__':
+    
+    # Run the manual examples above whenever this script is run.
+    main()
+    
+else:
+    
+    # Run doctest whenever the module is imported in another script.
+    # That is, this section will be run whenever the module is imported
+    # by typing "import my_functions" from this working directory. 
     
     
     print("#" + 50*"-")
@@ -248,13 +264,9 @@ def main():
     print("#" + 50*"-")
     print("# Tests complete")
     print("#" + 50*"-")
+
     
 
-if __name__== '__main__':
-    main()
-  
-  
-  
 ##################################################
 # End.
 ##################################################
