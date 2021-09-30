@@ -900,9 +900,9 @@ def convert_to_celsius(fahrenheit):
     Return the number of Celsius degrees equivalent to fahrenheit degrees.
 
     >>> convert_to_celsius(32)
-    0
+    0.0
     >>> convert_to_celsius(-40)
-    -40
+    -40.0
     >>> convert_to_celsius(75)
     23.88888888888889
     """
