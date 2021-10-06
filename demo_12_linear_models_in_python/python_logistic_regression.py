@@ -41,6 +41,7 @@ import os # To set working directory
 # import numpy as np # Not needed here but often useful
 import pandas as pd # To read and inspect data
 from sklearn.linear_model import LogisticRegression
+from sklearn import metrics
 
 import statsmodels.formula.api as smf # Another way to estimate logistic regression
 import statsmodels.api as sm # Another way to estimate logistic regression
@@ -59,7 +60,7 @@ sns.set(style="whitegrid", color_codes=True)
 # Find out the current directory.
 os.getcwd()
 # Change to a new directory.
-os.chdir('C:\\Users\\le279259\\Documents\\Teaching\\QMB6358_Fall_2020\\GitRepos\\QMB6358F20\\demo_12_linear_models_in_python')
+os.chdir('C:\\Users\\le279259\\OneDrive - University of Central Florida\\Documents\\Teaching\\QMB6358_Fall_2021\\GitRepo\\QMB6358F21\\demo_12_linear_models_in_python')
 # Check that the change was successful.
 os.getcwd()
 
@@ -197,8 +198,10 @@ pred_probs.max()
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import roc_curve
 # logit_roc_auc = roc_auc_score(y, logit_model_fit_sk.predict(X))
-logit_roc_auc = roc_auc_score(y, logit_model_fit_sk.predict_proba(X)[:,1])
-fpr, tpr, thresholds = roc_curve(y, logit_model_fit_sk.predict_proba(X)[:,1])
+
+y_pred_proba = logit_model_fit_sk.predict_proba(X)[:,1]
+logit_roc_auc = roc_auc_score(y, y_pred_proba)
+fpr, tpr, thresholds = roc_curve(y, y_pred_proba)
 
 # Plot the ROC curve.
 plt.figure()
@@ -210,9 +213,21 @@ plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
 plt.title('Receiver Operating Characteristic')
 plt.legend(loc="lower right")
-plt.savefig('Logit_ROC.pdf')
+# plt.savefig('Logit_ROC.pdf')
 plt.show()
 
+
+
+# Another method:
+fpr, tpr, _ = metrics.roc_curve(y,  y_pred_proba)
+auc = metrics.roc_auc_score(y, y_pred_proba)
+
+# Create ROC curve
+plt.plot(fpr,tpr,label="AUC="+str(auc))
+plt.ylabel('True Positive Rate')
+plt.xlabel('False Positive Rate')
+plt.legend(loc=4)
+plt.show()
 
 
 ##################################################
