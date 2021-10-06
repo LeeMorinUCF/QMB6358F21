@@ -8,7 +8,7 @@
 # Lealand Morin, Ph.D.
 # Assistant Professor
 # Department of Economics
-# College of Business Administration
+# College of Business
 # University of Central Florida
 #
 # October 15, 2019
@@ -101,13 +101,14 @@ summary(lm_full_model)
 class(lm_full_model)
 attributes(lm_full_model)
 
+# You can extract the estimated coefficients in a number of ways.
 lm_full_model$coefficients
 lm_full_model$coefficients['income']
 lm_full_model$coefficients[2]
 
 coef(lm_full_model)
 
-# Model predictions:
+# Obtain model predictions:
 summary(predict(lm_full_model))
 housing_data[, 'predictions'] <- predict(lm_full_model)
 
@@ -212,6 +213,7 @@ reg_line_not_cali <- beta_0_hat + beta_income_hat*income_grid
 lines(income_grid, reg_line_not_cali,
       lwd = 3, col = 'black')
 
+# Exercise:
 # Repeat for california without earthquakes (green)
 # and earthquakes (red).
 

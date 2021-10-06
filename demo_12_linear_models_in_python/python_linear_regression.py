@@ -9,7 +9,7 @@
 # Lealand Morin, Ph.D.
 # Assistant Professor
 # Department of Economics
-# College of Business Administration
+# College of Business
 # University of Central Florida
 #
 # October 15, 2020
@@ -51,7 +51,8 @@ import statsmodels.formula.api as sm # Another way to estimate linear regression
 # Find out the current directory.
 os.getcwd()
 # Change to a new directory.
-os.chdir('C:\\Users\\le279259\\Documents\\Teaching\\QMB6358_Fall_2020\\GitRepos\\QMB6358F20\\demo_12_linear_models_in_python')
+
+os.chdir('C:\\Users\\le279259\\OneDrive - University of Central Florida\\Documents\\Teaching\\QMB6358_Fall_2021\\GitRepo\\QMB6358F21\\demo_12_linear_models_in_python')
 # os.chdir('C:\Users\le279259\Documents\Teaching\QMB6358_Fall_2020\GitRepos\QMB6358F20\demo_12_linear_models_in_python')
 # Check that the change was successful.
 os.getcwd()
