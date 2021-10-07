@@ -44,7 +44,7 @@ rm(list=ls(all=TRUE))
 
 # Set working directory.
 # wd_path <- '/path/to/your/folder'
-wd_path <- '~/Teaching/QMB6358_Fall_2020/GitRepos/demo_10_linear_models_in_R'
+wd_path <- 'C:/Users/le279259/OneDrive - University of Central Florida/Documents/Teaching/QMB6358_Fall_2021/GitRepo/QMB6358F21/demo_09_linear_models_in_R'
 
 setwd(wd_path)
 

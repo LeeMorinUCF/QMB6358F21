@@ -171,6 +171,9 @@ reg_model_1.fit(X_1, Y)
 # Obtain predictions.
 Y_pred_1 = reg_model_1.predict(X_1)
 
+# Ask for statistics one-by-one.
+max(Y_pred_1)
+min(Y_pred_1)
 
 #--------------------------------------------------
 # Plot the results.

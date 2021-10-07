@@ -33,7 +33,7 @@ rm(list=ls(all=TRUE))
 
 # Set working directory.
 # wd_path <- '/path/to/your/folder'
-wd_path <- '~/Teaching/QMB6358_Fall_2020/GitRepos/QMB6358F20/demo_10_linear_models_in_R'
+wd_path <- 'C:/Users/le279259/OneDrive - University of Central Florida/Documents/Teaching/QMB6358_Fall_2021/GitRepo/QMB6358F21/demo_09_linear_models_in_R'
 
 setwd(wd_path)
 
@@ -115,7 +115,12 @@ housing_data[, 'predictions'] <- predict(lm_full_model)
 attributes(summary(lm_full_model))
 
 lm_full_model_summ <- summary(lm_full_model)
+class(lm_full_model_summ)
 lm_full_model_summ$adj.r.squared
+
+
+# Draw a plot of the regression line.
+plot(lm_full_model)
 
 
 ##################################################
