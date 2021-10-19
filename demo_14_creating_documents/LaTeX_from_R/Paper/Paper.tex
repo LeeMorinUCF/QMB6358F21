@@ -1,0 +1,92 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass{paper}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Declare packages in the preamble. 
+
+% Declare some TeX packages needed for graphics. 
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\epstopdfsetup{suffix=}
+
+% Sometimes it helps to use an if statement, 
+% if you use the file on multiple platforms. 
+% \ifx\pdftexversion\undefined
+%     \usepackage[dvips]{graphicx}
+% \else
+%     \usepackage[pdftex]{graphicx}
+%     \usepackage{epstopdf}
+%     \epstopdfsetup{suffix=}
+% \fi
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Sample Document}
+
+This is a sample of a document generated automatically from the figures and tables produced by
+the script that was used to read in and analyze data.
+First, in Section \ref{sec:data}, it describes the data.
+Next, in Section \ref{sec:results}, it describes the results of the estimated regression model.
+
+\section{Data} \label{sec:data}
+
+Summary statistics for numerical variables are shown in Table \ref{tab:summary} (all figures in millions).
+
+\input{../Tables/summary.tex}
+
+
+Table \ref{tab:earthquakes} shows the frequency of observations in and out of California along with the incidence of earthquakes. Notice that earthquakes have only happened in California.
+
+\input{../Tables/earthquakes.tex}
+
+The correlation matrix of potential variables in the model is shown in Table \ref{tab:corr}.
+House prices are positively correlated with income and California but negatively correlated with earthquakes. In the next setion, these variables will be included in a regression model.
+
+\input{../Tables/correlation.tex}
+
+
+
+\pagebreak
+\section{Empirical Results}  \label{sec:results}
+
+
+The estimates from the regression model are shown in Table \ref{tab:lm_model_1}.
+\input{../Tables/lm_model_1.tex}
+
+\input{../Text/regression.tex}
+
+
+
+
+\pagebreak
+The regression lines are shown in Figure \ref{fig:reg}, with the estimated intercept term for zip codes affected by earthquakes (red), those in the rest of California (green), and the zip codes outside of California.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{../Figures/regression.eps}
+\caption{Regression Model Predictions}
+\label{fig:reg}
+\end{figure}
+
+
+\pagebreak
+The predictions are shown in Figure \ref{fig:pred} compared to observed prices.
+It is clear that there is a reasonably close relationship between the predictions and the observed prices.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{../Figures/predictions.eps}
+\caption{House Prices vs. Predicted Prices}
+\label{fig:pred}
+\end{figure}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

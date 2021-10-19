@@ -181,25 +181,6 @@ format so that modules are available to simplify the process.
 
 
 
-### The ```os``` Module
-
-Before we do any more file handling, we would be better off if we could navigate the operating system.
-That is what the ```os``` module is for, which even adapts to your specific operating system.
-
-
-```python
-import os
-# Find out the current directory.
-os.getcwd()
-# Change to a new directory.
-# Notice the double backslashes. The first is the escape sequence to tell the interpreter to actually print the second backslash.
-os.chdir('C:\\Users\\le279259\\Documents\\Teaching\\QMB6358_Fall_2020\\GitRepos\\QMB6358\\demo_13_python_file_io')
-# Check that the change was successful.
-os.getcwd()
-```
-You can also use a relative path to avoid having a string that is specific to your platform.
-With this package you can code your program and make it platform independent.
-
 
 ### The ```csv``` Module
 
