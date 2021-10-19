@@ -45,7 +45,7 @@ os.getcwd()
 # Directory on my (physical) machine. 
 # os.chdir('C:\\Users\\le279259\\Documents\\Teaching\\QMB6358_Fall_2020\\GitRepos\\QMB6358F20\\demo_14_creating_documents\\LaTeX_from_python')
 # Directory on my virtual machine. 
-os.chdir("/home/pgbook/Documents/QMB6358_test/QMB6358F20/demo_14_creating_documents/LaTeX_from_python")
+os.chdir("/home/pgbook/Documents/QMB6358F21/demo_14_creating_documents/LaTeX_from_python")
 # Check that the change was successful.
 os.getcwd()
 
@@ -152,7 +152,7 @@ open_file.close()
 # Directory on my (physical) machine. 
 # os.chdir('C:\\Users\\le279259\\Documents\\Teaching\\QMB6358_Fall_2020\\GitRepos\\QMB6358F20\\demo_14_creating_documents\\LaTeX_from_python\\Paper')
 
-os.chdir("/home/pgbook/Documents/QMB6358_test/QMB6358F20/demo_14_creating_documents/LaTeX_from_python/Paper")
+os.chdir("/home/pgbook/Documents/QMB6358F21/demo_14_creating_documents/LaTeX_from_python/Paper")
 
 # Build the document from within the Paper folder.
 # The default version needs no options. 
