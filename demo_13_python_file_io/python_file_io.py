@@ -36,7 +36,7 @@ import csv
 os.getcwd()
 # Change to a new directory.
 # Notice the double backslashes. The first is the escape sequence to tell the interpreter to actually print the second backslash.
-os.chdir('C:\\Users\\le279259\\Documents\\Teaching\\QMB6358_Fall_2020\\GitRepos\\QMB6358F20\\demo_13_python_file_io')
+os.chdir('C:\\Users\\le279259\\OneDrive - University of Central Florida\\Documents\\Teaching\\QMB6358_Fall_2021\\GitRepo\\QMB6358F21\\demo_13_python_file_io')
 # Check that the change was successful.
 os.getcwd()
 
@@ -126,7 +126,7 @@ with open('my_new_csv_file.csv', 'r') as csvfile:
 # You can enter whatever you want as the delimiter.
 # One of the silliest examples I've found on the internet is:
 with open('eggs.csv', 'w') as csvfile:
-    my_writer_object = csv.writer(csvfile, delimiter=' ',
+    my_writer_object = csv.writer(csvfile, delimiter='#',
                             quotechar='|', quoting=csv.QUOTE_MINIMAL)
     my_writer_object.writerow(['Spam'] * 5 + ['Baked Beans'])
     my_writer_object.writerow(['Spam', 'Lovely Spam', 'Wonderful Spam'])
@@ -246,7 +246,7 @@ print(contents)
 
 
 with open('file_example.txt', 'r') as example_file:
-    first_ten_chars = example_file.read(10)
+    first_ten_chars = example_file.read(25)
     the_rest = example_file.read()
 
 print("The first 10 characters:", first_ten_chars)
@@ -470,7 +470,7 @@ with urllib.request.urlopen(url) as webpage:
 # The with statement can also be used for writing files. 
 # Let's move to another directory for writing. 
 
-os.chdir('C:\\Users\\le279259\\Documents\\Teaching\\ECP3004_Spring_2021\\GitRepo\\ECP3004S21\\demo_12_PP_Ch_10_Read_Write\\new_files')
+os.chdir('C:\\Users\\le279259\\OneDrive - University of Central Florida\\Documents\\Teaching\\QMB6358_Fall_2021\\GitRepo\\QMB6358F21\\demo_13_python_file_io')
 # Check that the change was successful.
 os.getcwd()
 
@@ -493,6 +493,11 @@ with open('topics.txt', 'w') as output_file:
 
 with open('topics.txt', 'a') as output_file:
     output_file.write('Software Engineering')
+
+
+
+with open('topics.txt', 'a') as output_file:
+    output_file.write('\nBusiness Analytics')
 
 
 
