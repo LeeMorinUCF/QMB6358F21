@@ -1,7 +1,7 @@
 /*
-    Create Bids table with variables: BidID, AuctionID, BidderID, 
+    Create Bids table with variables: BidID, AuctionID, BidderID,
     and Bid.
-    The primary key is BidID. 
+    The primary key is BidID.
 
 */;
 
@@ -12,6 +12,6 @@ AuctionID      INTEGER NOT NULL ,
 BidderID       INTEGER NOT NULL ,
 Bid            REAL ,
 FOREIGN KEY    (AuctionID) REFERENCES Auctions (AuctionID) ,
-FOREIGN KEY    (BidderID) REFERENCES Bidderss (BidderID) ,
+FOREIGN KEY    (BidderID) REFERENCES Bidders (BidderID) ,
 PRIMARY KEY    (BidID)
 );
