@@ -1,17 +1,18 @@
 # Interacting with Databases Using SQL Scripts
 
-Now that we know how to interact with a database, 
-we will consider a few more examples. 
-This time, we will progress toward a more generalized method of interacting
-with databases: will will write SQL scripts. 
+
+
+
+
 SQL is a language in its own right, so it makes sense 
 to write your queries in dedicated SQL scripts. 
 This way, the same operations can be used on a number of different platforms:
 you could run them in the GUI of a database manager, 
-you could submit them through a terminal window 
-(such as when I run your my_module.py scripts), 
+you could submit them through a terminal window,
+you could run your queries in R using a package such as ```sqldf```,
 and you can read the text of the SQL query in Python 
-and use the ```sqlite3``` module.
+by using the ```sqlite3``` module.
+
 
 ## Basic SQL Example
 
