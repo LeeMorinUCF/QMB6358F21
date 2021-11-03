@@ -174,6 +174,21 @@ print(rosen(res_bfgs.x))
 
 
 #--------------------------------------------------
+# Broyden-Fletcher-Goldfarb-Shanno algorithm (BFGS)
+# without the gradient function. 
+#--------------------------------------------------
+
+
+res_bfgs_nograd = minimize(rosen, x0, method='BFGS',
+                    options={'disp': True})
+
+print(res_bfgs_nograd.x)
+print(res_bfgs_nograd.fun)
+print(rosen(res_bfgs_nograd.x))
+
+
+
+#--------------------------------------------------
 # Newton-Conjugate-Gradient algorithm
 # AKA Outer Product of the Gradient Method (OPG)
 # Can use a Hessian matrix of approximation to it. 

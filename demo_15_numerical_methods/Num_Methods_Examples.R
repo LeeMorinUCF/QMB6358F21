@@ -136,7 +136,7 @@ x_1_soln_w_inv <- A_1_inv %*% b_1
 f <- function(x) log(x) - exp(-x)
 # That is, find the x at which this function is zero.
 
-x_grid <- seq(0.1, 2.0, by = 0.01)
+x_grid <- seq(0.1, 2.0, by = 0.000001)
 plot(x_grid, f(x_grid),
      main = 'Finding a Root',
      xlab = 'x', ylab = 'f(x)',
@@ -144,8 +144,19 @@ plot(x_grid, f(x_grid),
 abline(h = 0)
 
 
+# One solution:
+f_grid <- f(x_grid)
+x_root <- x_grid[which.min(abs(f_grid))]
+print(x_root)
+
+
+
 # Solution:
-f_soln <- uniroot(f, c(0, 2), tol = 0.0001)
+f_soln <- uniroot(f, c(0, 2), tol = 0.000001)
+f_soln
+
+
+f_soln <- uniroot(f, c(1, 1.5), tol = 0.000000001)
 f_soln
 
 
@@ -289,7 +300,7 @@ parms <- c(12, 2, 1)
 model_2b(c(1, 1, 1), parms)
 
 
-# Sole the system.
+# Solve the system.
 multiroot(model_2b, c(1, 1, 1), parms = parms)
 
 
@@ -338,7 +349,14 @@ xmin
 
 # You can make your function print out a progress report to see the iterations.
 # Get the function to print to see where the function is evaluated:
-optimize(function(x) x^2*(print(x)-1), lower = 0, upper = 10)
+# optimize(function(x) x^2*(print(x)-1), lower = 0, upper = 10)
+# f2 <- function(x) x^2*(print(x)-1)
+f2 <- function(x) {
+  print(x)
+  x^2*(x-1)
+  }
+optimize(f2, lower = 0, upper = 10)
+
 
 
 # Now try a problem that is numerically challenging.
