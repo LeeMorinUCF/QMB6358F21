@@ -54,8 +54,10 @@ os.getcwd()
 ##################################################
 
 
-# Create a database, if it does not already exist.
+# Open the database from the previous session.
 con = sqlite3.connect('population.db')
+# In this case, the database is already populated from the last demo.
+# Copy the file "population.db" to this folder to continue.
 
 # Create a cursor object from which to execute
 # SQL commands.
