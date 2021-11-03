@@ -77,7 +77,7 @@ cur = con.cursor()
 #--------------------------------------------------
 
 # Read the data from a script.
-sql_str = open("Create_FirstTable.sql").read()
+sql_str = open("CreateFirstTable.sql").read()
 # It reads a string containing the commands in the script.
 
 # See what's inside:
