@@ -1,8 +1,33 @@
 # Interacting with Databases Using SQL Scripts
 
+In this section, we will learn how information can be stored, 
+retrieved and organized using databases. 
+Businesses and other organizations rely heavily on databases to keep track of information 
+for many accounting and payroll functions.
+Your very own information is stored in many databases.
+For example, the IRS keeps a record of your tax information by 
+recording amounts in the fields of your tax return, 
+your vital statistics, and the primary key is your social security number. 
+If you have a driver's license, the DMV keeps a record of your vehicles, 
+any tickets you may have received, your vital statistics, 
+and these are indexed by your driver's license number as the primary key. 
+The same is true for any online purchases you make: 
+your order details, your address and your purchase history 
+are all stored in a database with some form of customer id number and order number. 
+The primary reason for a business analyst or data scientist to use databases
+is to generate a dataset from the information stored in databases. 
 
-
-
+The primary tool that we will use is the Python module ```sqlite3```. 
+SQL is an acronym for *Structured Query Language*, 
+which is either pronounced "S-Q-L" or "sequel". 
+It is a language or, more precisely, a set of dialects that are used to 
+execute commands called *queries* using *relational databases*. 
+There exist many dialects of SQL and in fact, many other database structures
+that do not fall under the SQL paradigm. 
+However, SQL is ubiquitous in business and is a stepping stone to more advanced
+methods of interacting with databases.
+The dialect of SQL called ```sqlite3``` is a compact and versatile 
+set of infrastructure for executing SQL queries and interacting with databases. 
 
 SQL is a language in its own right, so it makes sense 
 to write your queries in dedicated SQL scripts. 
@@ -34,41 +59,43 @@ PRIMARY KEY    (KeyID)
 );
 ```
 
-This query is saved in the SQL script ```Create_FirstTable.sql```. 
-We can run it by reading the SQL code in the script as a string, 
-then running it using the ```execute()``` method of our database connection, 
-as if we entered the string manually. 
+This query is saved in the SQL script ```CreateFirstTable.sql```, 
+which can be used to enter the information directly
+into the SQLite3 interface. 
+For now, we can run it by entering the SQL code at the ```sqlite3``` prompt. 
 
-```python
-import sqlite3
-
-con = sqlite3.connect('example.db')
-cur = con.cursor()
-
-sql_str = open("Create_FirstTable.sql").read()
-cur.execute(sql_str)
-
+```
+sqlite> CREATE TABLE FirstTable(
+   ...> KeyID          INTEGER NOT NULL ,
+   ...> Date           TEXT NOT NULL ,
+   ...> Name           TEXT NOT NULL ,
+   ...> PRIMARY KEY    (KeyID)
+   ...> );
 ```
 
 
-
-To verify the above, you can output the schema by using the command 
-
-```python
-cur.execute("PRAGMA table_info('FirstTable')").fetchall()
+To verify that the schema for the table was created, 
+you can output the schema by using the command 
 
 ```
+sqlite> .schema
+```
 
-It ouputs the following:
-```python
-[(0, 'KeyID', 'INTEGER', 1, None, 1),
- (1, 'Date', 'TEXT', 1, None, 0),
- (2, 'Name', 'TEXT', 1, None, 0)]
+It outputs the following:
+```
+CREATE TABLE FirstTable(
+KeyID          INTEGER NOT NULL ,
+Date           TEXT NOT NULL ,
+Name           TEXT NOT NULL ,
+PRIMARY KEY    (KeyID)
+);
+sqlite> 
 ```
 The most important parameters at this stage are the names of the fields 
 and the data types. 
 Aside from checking for mistakes made on input, this is especially useful for understanding a database created by someone else. 
 
+The last line is the ```sqlite3``` prompt awaiting another command. 
 You can then populate ```FirstTable``` with a few entries as follows
 
 ```
@@ -80,107 +107,121 @@ INSERT INTO FirstTable(KeyID, Date, Name)
 VALUES(3, "20131204", "Alberto M. Segre");
 ```
 
-This information is recorded in the SQL script ```Populate_FirstTable.sql```.
+This information is recorded in the SQL script ```PopulateFirstTable.sql```
+but we can run the commands at the ```sqlite3``` command prompt.
 
-
-```python
->>> sql_str = open("Populate_FirstTable.sql").read()
->>> cur.execute(sql_str)
-
-```
-
-This is the same set of commands we used to create the table 
-but it throws an error:
-
-```python
-Traceback (most recent call last):
-
-  File "<ipython-input-101-26fc28032745>", line 10, in <module>
-    cur.execute(sql_str)
-
-Warning: You can only execute one statement at a time.
-```
-
-The ```execute()``` method takes a string as the argument and
-is designed to execute only one SQL statement. 
-The right tool for the job is the ```executescript()``` method. 
-
-```python
-cur.executescript(sql_str)
-```
 
 
 To see the table entered above, you can execute the simplest SQL query
-```python
->>> cur.execute('''SELECT * FROM FirstTable''')
->>> cur.fetchall()
-[(1, '20131204', 'Harry J. Paarsch'),
- (2, '20131204', 'Konstantin Golyaev'),
- (3, '20131204', 'Alberto M. Segre')]
+```
+SELECT * FROM FirstTable;
 ```
 which will return the entire table. 
+```
+sqlite> SELECT * FROM FirstTable;
+1|20131204|Harry J. Paarsch
+2|20131204|Konstantin Golyaev
+3|20131204|Alberto M. Segre
+sqlite> 
+
+```
+
 
 You can execute a query with a restriction by adding a ```WHERE``` clause
 
-```python
->>> cur.execute("SELECT * FROM FirstTable WHERE KeyID > 1")
->>> cur.fetchall()
-[(2, '20131204', 'Konstantin Golyaev'), (3, '20131204', 'Alberto M. Segre')]
+
+
 ```
+SELECT * FROM FirstTable WHERE KeyID > 1;
+```
+And it outputs only the records with ```KeyID > 1```:
+
+```
+sqlite> SELECT * FROM FirstTable WHERE KeyID > 1;
+SELECT * FROM FirstTable WHERE KeyID > 1;
+2|20131204|Konstantin Golyaev
+3|20131204|Alberto M. Segre
+sqlite> 
+```
+
+
 
 Alternatively, you can execute a query with a projection by specifying the fields
-```python
->>> cur.execute("SELECT Name, Date FROM FirstTable")
->>> cur.fetchall()
-[('Harry J. Paarsch', '20131204'),
- ('Konstantin Golyaev', '20131204'),
- ('Alberto M. Segre', '20131204')]
+```
+SELECT Name, Date FROM FirstTable;
 ```
 
-If you prefer variables that are functions of the fields in the table, you can specify them with additional functions
-```python
->>> cur.execute(
-    "SELECT \
-        Name ,\
-        SUBSTR(Date, 1, 4) as Year \
-    FROM FirstTable"
-)
->>> cur.fetchall()
-[('Harry J. Paarsch', '2013'),
- ('Konstantin Golyaev', '2013'),
- ('Alberto M. Segre', '2013')]
+The output is
+
+```
+sqlite> SELECT Name, Date FROM FirstTable;
+Harry J. Paarsch|20131204
+Konstantin Golyaev|20131204
+Alberto M. Segre|20131204
+sqlite> 
 ```
 
-Notice that the backslash ```\```
-allows a string to continue to the next line.
+If you prefer variables that are functions of the fields in the table, you can specify them with additional functions.
+
+```
+SELECT 
+    Name ,
+    SUBSTR(Date, 1, 4) as Year 
+FROM FirstTable;
+```
+The function ```SUBSTR``` takes a substring 
+from the characters in a field of type ```TEXT```:
+
+```
+sqlite> SELECT 
+   ...>     Name ,
+   ...>     SUBSTR(Date, 1, 4) as Year 
+   ...> FROM FirstTable;
+Harry J. Paarsch|2013
+Konstantin Golyaev|2013
+Alberto M. Segre|2013
+sqlite> 
+```
+
 
 Finally, you can combine these operations in a more complex query
 
-```python
->>> cur.execute(
-    "SELECT \
-        Name ,\
-            SUBSTR(Date, 1, 4) as Year \
-    FROM \
-        FirstTable \
-    WHERE KeyID > 1 \
-"
-)
->>> cur.fetchall()
-[('Konstantin Golyaev', '2013'), ('Alberto M. Segre', '2013')]
 ```
+SELECT 
+    Name ,
+    SUBSTR(Date, 1, 4) as Year 
+FROM 
+    FirstTable
+WHERE KeyID > 1;
+```
+And when you run this command, 
+it performs both operations:
+
+
+```
+sqlite> SELECT 
+   ...>     Name ,
+   ...>     SUBSTR(Date, 1, 4) as Year 
+   ...> FROM 
+   ...>     FirstTable
+   ...> WHERE KeyID > 1;
+Konstantin Golyaev|2013
+Alberto M. Segre|2013
+sqlite> 
+```
+
 
 ### Combining more than one table
 
-Again, first specify the schema of this table
+To add another table, 
+first specify the schema of this table
 
 ```
 CREATE TABLE SecondTable(
 KeyID          INTEGER PRIMARY KEY ,
-OtherID        INTEGER PRIMARY KEY ,
+OtherID        INTEGER,
 Name           TEXT NOT NULL ,
 FOREIGN KEY    (OtherID) REFERENCES FirstTable (KeyID)
-PRIMARY KEY    (KeyID)
 );
 ```
 
@@ -194,45 +235,62 @@ INSERT INTO SecondTable(KeyID, OtherID, Name)
 VALUES(102, 2, "Konstantin Golyaev");
 ```
 
-Since we know how to execute an SQL script with multiple commands, 
-we can create the table and populate it from one script. 
+Now you can verify the contents of the database with ```.tables``` and ```.schema```:
 
-```python
-sql_str = open("SecondTable.sql").read()
-cur.executescript(sql_str)
+```
+sqlite> .tables
+FirstTable   SecondTable
+sqlite> .schema
+CREATE TABLE FirstTable(
+KeyID          INTEGER NOT NULL ,
+Date           TEXT NOT NULL ,
+Name           TEXT NOT NULL ,
+PRIMARY KEY    (KeyID)
+);
+CREATE TABLE SecondTable(
+KeyID          INTEGER PRIMARY KEY ,
+OtherID        INTEGER,
+Name           TEXT NOT NULL ,
+FOREIGN KEY    (OtherID) REFERENCES FirstTable (KeyID)
+);
+sqlite> 
 ```
 
-Now you can verify the contents of the database by executing 
-```PRAGMA table_info('SecondTable')``` or, 
-for a small example such as this, you can output the table to screen
 
-```python
->>> cur.execute('''SELECT * FROM SecondTable''')
->>> cur.fetchall()
-[(101, 1, 'Harry J. Paarsch'), (102, 2, 'Konstantin Golyaev')]
+
+In addition, for a small example like this, you can output the tables to screen
+
 ```
+sqlite> SELECT * FROM FirstTable;
+SELECT * FROM FirstTable;
+1|20131204|Harry J. Paarsch
+2|20131204|Konstantin Golyaev
+3|20131204|Alberto M. Segre
+sqlite> SELECT * FROM SecondTable;
+101|1|Harry J. Paarsch
+102|2|Konstantin Golyaev
+sqlite> 
+
+```
+
 
 With two tables, you can implement what is sometimes called a *theta join*. 
 Theta is the Greek letter that is sometimes used to denote the operation
 of combining tables. 
 
-```python
->>> cur.execute(
-    "SELECT \
-        FirstTable.KeyID , \
-        SecondTable.KeyID , \
-        FirstTable.Name \
-    FROM \
-        FirstTable , \
-        SecondTable \
-    WHERE \
-        (FirstTable.Name = SecondTable.Name) \
-    AND \
-        (FirstTable.KeyID = SecondTable.OtherID) \
-    ;"
-    )
->>> cur.fetchall()
-[(1, 101, 'Harry J. Paarsch'), (2, 102, 'Konstantin Golyaev')]
+```
+SELECT 
+    FirstTable.KeyID ,
+    SecondTable.KeyID ,
+    FirstTable.Name
+FROM
+    FirstTable ,
+    SecondTable
+WHERE 
+    (FirstTable.Name = SecondTable.Name)
+AND
+    (FirstTable.KeyID = SecondTable.OtherID)
+;
 ```
 
 ### Using Command Files
@@ -247,14 +305,8 @@ enabling someone else to build upon your work in the future.
 
 See the scripts ```FirstTable.sql```, ```SecondTable.sql``` and ```ExampleThetaJoin.sql``` above.
 
-One way of inplementing this is by installing the program sqlite3
-on your operating system. 
-Then you can open it in a terminal window and write short commands to run the scripts. 
-These SQL scripts typically have other commands above and below the queries
-to format files and redirect output. 
 
-
-For example, you can create the first table by running the command 
+You can create the first table by running the command 
 
 ```
 sqlite> .read FirstTable.sql
@@ -271,7 +323,7 @@ sqlite> .read ExampleThetaJoin.sql
 ```
 at the ```sqlite>``` prompt.
 
-To see the result, type ```cat ExampleThetaJoin.csv``` in a terminal window. 
+To see the result, type ```cat ExampleThetaJoin.csv``` in a terminal window or open it in any text editor. 
 
 This is just one more among many ways to submit SQL queries to a database. 
 
@@ -281,59 +333,61 @@ This is just one more among many ways to submit SQL queries to a database.
 In this example, the procedure is made more scalable by reading the tables from ```.csv``` files.
 The procedure is very similar, aside from the commands for reading in the data.
 
-Open a new database in sqlite3
 
-```python
-con = sqlite3. connect("AuctionsDataBase.db")
-cur = con. cursor()
+Open a database to create in sqlite3 from the terminal window
+(before opening ```sqlite3```).
+```
+sqlite3 SampleDataBase.db
+```
+
+Now read in the schema for the two tables that will make up ```SampleDataBase.db```.
+
+```
+sqlite> .read FirstTable.sql
+sqlite> .read SecondTable.sql
+```
+
+To verify the list of tables, you can enter ```.tables``` and the table names will be listed.
+The command ```.schema``` will display the schema for the tables.
+However, to display the contents themselves, you can enter the basic query
+
+```
+sqlite> SELECT * FROM FirstTable;
+```
+and likewise for ```SecondTable```.
+
+To execute the SQL query coded into the script ```ExampleThetaJoin.sql```, use the command ```.read``` at the ```sqlite>``` prompt,
+just as you did for the creation of the tables.
+
+```
+sqlite> .read ExampleThetaJoin.sql
+```
+
+Since the script ```ExampleThetaJoin.sql``` includes a statement to output to a specific file
+(```.output OutFileName.csv``` and the associated options), the resulting table can be seen in the working directory and viewed with any text editor.
+
+
+
+## Auctions Database
+
+In this example, the procedure is made more scalable by reading the tables from ```.csv``` files.
+The procedure is very similar, aside from the commands for reading in the data.
+
+For this example, quit sqlite and open a new database
+```
+sqlite3 AuctionsDataBase.db
 ```
 
 Next, read in the scripts ```CreateAuctionsTable.sql```, ```CreateBiddersTable.sql``` and ```CreateBidsTable.sql``` to create the tables, just as for the sample database.
 
-```python
-# Create the Auctions table. 
-sql_str = open("CreateAuctionsTable.sql").read()
-cur.executescript(sql_str)
+As above, you can verify the entry by executing the ```.tables``` and ```.schema``` commands.
 
-# Create the Bidders table. 
-sql_str = open("CreateBiddersTable.sql").read()
-cur.executescript(sql_str)
-
-# Create the Bids table. 
-sql_str = open("CreateBidsTable.sql").read()
-cur.executescript(sql_str)
+The next step is to populate the tables with the ```.csv``` files associated with each, using the ```.import``` command.
 ```
-
-
-As above, you can verify the entry by executing the 
-```PRAGMA table_info('Table_Name')``` command.
-
-The next step is to populate the tables with the ```.csv``` files associated with each.
-We need to read in the file, so we will use the ```csv``` module
-to obtain a list of entries in the rows of this file.
-
-```python
-import csv
-table_file = open("AuctionsTable.csv")
-rows = csv.reader(table_file)
-cur. executemany("INSERT INTO Auctions VALUES (?, ?, ?, ?)", rows)
-```
-
-Notice that, this time, we used the ```executemany``` method
-to iterate over the list of rows in the ```csv``` file. 
-Do the same for the other two tables.
-
-```python
-table_file = open("BiddersTable.csv")
-rows = csv.reader(table_file)
-cur. executemany("INSERT INTO Bidders VALUES \
-                 (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", rows)
-
-table_file = open("BidsTable.csv")
-rows = csv.reader(table_file)
-cur. executemany("INSERT INTO Bids VALUES \
-                 (?, ?, ?, ?)", rows)
-
+.separator ,
+.import AuctionsTable.csv Auctions
+.import BiddersTable.csv Bidders
+.import BidsTable.csv Bids
 ```
 
 You can still verify the contents of the tables with the query
@@ -341,49 +395,25 @@ You can still verify the contents of the tables with the query
 SELECT * FROM Auctions;
 ```
 and so on but we will move on to running the queries instead.
-Now let's execute a query: `ComputeBidSummariesByBidder.sql```.
-The above query performs two main actions.
-First, it aggregates data by bidder.
-Second, it calculates values for each bidder.
+To view the products of the queries, you may want to keep open a terminal window to view the output of ```ls``` before and after the query to see the output file created.
 
+As above, execute the queries using the ```.read``` command at the ```sqlite>``` prompt.
 
-In principle, you can write your queries in scripts
-and some samples are shown above, such as:
-```python
-sql_str = open("ComputeBidSummariesByBidder.sql").read()
-cur.executescript(sql_str)
-cur.fetchall()
 ```
-
-Note that the sample scripts are written in another dialect of SQL,
-which specifies the format of the outputs and
-directs the output to specific files.
-
-Instead, we will execute the queries
-by entering them in a string.
-
-
-
-```python
->>> cur.execute(" \
-            SELECT \
-                b.BidderID     AS BidderID , \
-                MIN(b.Bid)     AS SmallestBid , \
-                AVG(b.Bid)     AS AverageBid , \
-                MAX(b.Bid)     AS LargestBid \
-            FROM \
-                Bids AS b \
-            GROUP BY \
-                b.BidderID \
-            ;")
->>> cur.fetchall()
-[(1, 10.86, 13.531666666666666, 19.21),
- (2, 8.81, 11.384285714285713, 13.09),
- (3, 7.39, 10.5825, 15.62),
- (4, 7.93, 12.267500000000002, 15.67),
- (5, 7.35, 10.09, 14.28),
- (6, 7.14, 9.898333333333333, 13.03),
- (7, 7.99, 10.128, 12.34)]
+sqlite> .read ComputeBidSummariesByBidder.sql
+```
+which executes the following query.
+```
+SELECT 
+    b.BidderID     AS BidderID , 
+    MIN(b.Bid)     AS SmallestBid , 
+    AVG(b.Bid)     AS AverageBid , 
+    MAX(b.Bid)     AS LargestBid 
+FROM 
+    Bids AS b 
+GROUP BY 
+    b.BidderID 
+;
 ```
 
 Notice that we use the keyword ```AS``` for both the
@@ -394,52 +424,45 @@ which is often useful in practice when the name of the table
 might be uninformative or excessively long.
 
 
+Now you can view the table ```ComputeBidSummariesByBidder.out``` as specified in the script.
+The procedure is the same for the other queries.
+
+
+The above query performs two main actions. 
+First, it aggregates data by bidder. Second, it joins data from two different tables. 
+Let's look at these two components separately. 
+
+
+
+
+
+
 
 ### Aggregation 
 
 The aggregation step allows you to calculate functions of the data and tabulate them by different values of a particular variable. 
 
-```python
->>> cur.execute(" \
-            SELECT \
-                AVG(bids.Bid) AS AverageBid \
-            FROM \
-                Bids AS bids \
-            GROUP BY \
-                bids.BidderID \
-            ;"
-            )
->>> cur.fetchall()
-[(13.531666666666666,),
- (11.384285714285713,),
- (10.5825,),
- (12.267500000000002,),
- (10.09,),
- (9.898333333333333,),
- (10.128,)]
+```
+SELECT 
+    AVG(bids.Bid) AS AverageBid
+FROM
+    Bids AS bids
+GROUP BY
+    bids.BidderID
+;
 ```
 
-You can add unique variables by the grouping variable.
+You can add unique variables aggregated by the grouping variable.
 
-```python
->>> cur.execute(" \
-            SELECT \
-                bids.BidderID, \
-                AVG(bids.Bid) AS AverageBid \
-            FROM \
-                Bids AS bids \
-            GROUP BY \
-                bids.BidderID \
-            ;"
-            )
->>> cur.fetchall()
-[(1, 13.531666666666666),
- (2, 11.384285714285713),
- (3, 10.5825),
- (4, 12.267500000000002),
- (5, 10.09),
- (6, 9.898333333333333),
- (7, 10.128)]
+```
+SELECT 
+    bids.BidderID,
+    AVG(bids.Bis) AS AverageBid
+FROM
+    Bids AS bids
+GROUP BY
+    bids.BidderID
+;
 ```
 
 
@@ -448,61 +471,21 @@ You can add unique variables by the grouping variable.
 
 ### Joins
 
-An intermediate step is to join together two tables by the join key BidderID. 
-
-```python
->>> cur.execute(
-            "SELECT \
-                bidders.BidderID, \
-                bidders.FirstName, \
-                bidders.LastName, \
-                bids.Bid \
-            FROM \
-                Bids AS bids \
-            INNER JOIN Bidders AS bidders \
-                ON bids.BidderID = bidders.BidderID \
-            ;"
-)
->>> cur.fetchall()
-[(1, 'Adam', 'Cooper', 12.1),
- (2, 'Bryan', 'Dykstra', 12.38),
- (3, 'Charles', 'Elan', 11.63),
- (5, 'Edward', 'Gulden', 8.84),
- (6, 'Frank', 'Hollister', 8.37),
- (7, 'George', 'Ivanov', 7.99),
- (5, 'Edward', 'Gulden', 9.8),
- (6, 'Frank', 'Hollister', 7.14),
- (7, 'George', 'Ivanov', 12.34),
- (2, 'Bryan', 'Dykstra', 12.84),
- (4, 'David', 'Forester', 10.88),
- (6, 'Frank', 'Hollister', 13.03),
- (1, 'Adam', 'Cooper', 12.27),
- (2, 'Bryan', 'Dykstra', 12.76),
- (3, 'Charles', 'Elan', 7.39),
- (4, 'David', 'Forester', 15.67),
- (7, 'George', 'Ivanov', 12.25),
- (1, 'Adam', 'Cooper', 19.21),
- (2, 'Bryan', 'Dykstra', 9.93),
- (3, 'Charles', 'Elan', 7.69),
- (5, 'Edward', 'Gulden', 14.28),
- (5, 'Edward', 'Gulden', 10.18),
- (6, 'Frank', 'Hollister', 10.74),
- (3, 'Charles', 'Elan', 15.62),
- (4, 'David', 'Forester', 7.93),
- (1, 'Adam', 'Cooper', 12.59),
- (2, 'Bryan', 'Dykstra', 9.88),
- (5, 'Edward', 'Gulden', 7.35),
- (6, 'Frank', 'Hollister', 12.06),
- (7, 'George', 'Ivanov', 8.96),
- (1, 'Adam', 'Cooper', 14.16),
- (2, 'Bryan', 'Dykstra', 13.09),
- (6, 'Frank', 'Hollister', 8.05),
- (7, 'George', 'Ivanov', 9.1),
- (1, 'Adam', 'Cooper', 10.86),
- (2, 'Bryan', 'Dykstra', 8.81),
- (4, 'David', 'Forester', 14.59)]
+An intermediate step is to join together two tables by the join key ```BidderID```. 
 
 ```
+SELECT 
+    bidders.BidderID,
+    bidders.FirstName,
+    bidders.LastName,
+    bids.Bid
+FROM
+    Bids AS bids
+INNER JOIN Bidders AS bidders
+    ON bids.BidderID = bidders.BidderID
+;
+```
+
 
 The ```INNER JOIN``` is but one of several kinds of joins possible. 
 Since a feature of this database is that every bid corresponds to one bidder in the bidder table, this example is not rich enough to demonstrate the various kinds of joins. 
@@ -548,30 +531,22 @@ Examples of these joins are as follows.
 The ```LEFT JOIN``` collects all of the entries that appear in the *first*, 
 or ```LEFT``` table but are not necessarily in both tables.
 
-```python
->>> cur.execute(
-            "SELECT \
-                bidders.BidderID, \
-                bidders.FirstName, \
-                bidders.LastName, \
-                AVG(bids.Bid) AS AverageBid \
-            FROM \
-                Bids AS bids \
-            LEFT JOIN (SELECT * FROM Bidders WHERE BidderID < 6) AS bidders \
-                ON bids.BidderID = bidders.BidderID \
-            GROUP BY \
-                bidders.BidderID, \
-                bidders.FirstName, \
-                bidders.LastName \
-            ;"
-            )
->>> cur.fetchall()
-[(None, None, None, 10.002727272727272),
- (1, 'Adam', 'Cooper', 13.531666666666666),
- (2, 'Bryan', 'Dykstra', 11.384285714285713),
- (3, 'Charles', 'Elan', 10.5825),
- (4, 'David', 'Forester', 12.267500000000002),
- (5, 'Edward', 'Gulden', 10.09)]
+
+```
+SELECT 
+    bidders.BidderID,
+    bidders.FirstName,
+    bidders.LastName,
+    AVG(bids.Bid) AS AverageBid
+FROM
+    Bids AS bids
+LEFT JOIN (SELECT * FROM Bidders WHERE BidderID < 6) AS bidders
+    ON bids.BidderID = bidders.BidderID
+GROUP BY 
+    bidders.BidderID,
+    bidders.FirstName,
+    bidders.LastName
+;
 ```
 
 #### Right Join
@@ -579,31 +554,21 @@ or ```LEFT``` table but are not necessarily in both tables.
 The ```RIGHT JOIN``` collects all of the entries that appear in the *second*, 
 or ```RIGHT``` table but are not necessarily in both tables.
 
-```python
->>> cur.execute(
-            "SELECT \
-                bidders.BidderID, \
-                bidders.FirstName, \
-                bidders.LastName, \
-                AVG(bids.Bid) AS AverageBid \
-            FROM \
-                (SELECT * FROM Bids WHERE BidderID > 2) AS bids \
-            RIGHT JOIN Bidders AS bidders \
-                ON bids.BidderID = bidders.BidderID \
-            GROUP BY \
-                bidders.BidderID, \
-                bidders.FirstName, \
-                bidders.LastName \
-            ;"
-            )
->>> cur.fetchall()
-Traceback (most recent call last):
-
-  File "<ipython-input-89-6dbd0f81c504>", line 1, in <module>
-    cur.execute(
-
-OperationalError: RIGHT and FULL OUTER JOINs are not currently supported
-
+```
+SELECT 
+    bidders.BidderID,
+    bidders.FirstName,
+    bidders.LastName,
+    AVG(bids.Bid) AS AverageBid
+FROM
+    (SELECT * FROM Bids WHERE BidderID > 2) AS bids
+RIGHT JOIN Bidders AS bidders
+    ON bids.BidderID = bidders.BidderID
+GROUP BY 
+    bidders.BidderID,
+    bidders.FirstName,
+    bidders.LastName
+;
 ```
 
 Notice that sqlite3 will complain if you try to do a ```RIGHT JOIN```. 
@@ -616,27 +581,21 @@ with the tables A and B switched.
 
 The ```INNER JOIN``` collects all of the entries that appear in *both* tables. 
 
-```python
->>> cur.execute(
-            "SELECT \
-                bidders.BidderID, \
-                bidders.FirstName, \
-                bidders.LastName, \
-                AVG(bids.Bid) AS AverageBid \
-            FROM \
-                (SELECT * FROM Bids WHERE BidderID > 2) AS bids \
-            INNER JOIN (SELECT * FROM Bidders WHERE BidderID < 6) AS bidders \
-                ON bids.BidderID = bidders.BidderID \
-            GROUP BY \
-                bidders.BidderID, \
-                bidders.FirstName, \
-                bidders.LastName \
-            ;"
-            )
->>> cur.fetchall()
-[(3, 'Charles', 'Elan', 10.5825),
- (4, 'David', 'Forester', 12.267500000000002),
- (5, 'Edward', 'Gulden', 10.09)]
+```
+SELECT 
+    bidders.BidderID,
+    bidders.FirstName,
+    bidders.LastName,
+    AVG(bids.Bid) AS AverageBid
+FROM
+    (SELECT * FROM Bids WHERE BidderID > 2) AS bids
+INNER JOIN (SELECT * FROM Bidders WHERE BidderID < 6) AS bidders
+    ON bids.BidderID = bidders.BidderID
+GROUP BY 
+    bidders.BidderID,
+    bidders.FirstName,
+    bidders.LastName
+;
 ```
 
 As with a ```RIGHT JOIN```, an ```INNER JOIN``` can be done 
@@ -648,31 +607,21 @@ with a ```WHERE``` clause to exclude missing values in table B.
 
 The ```OUTER JOIN``` collects all of the entries that appear in *any* of the tables. 
 
-```python
->>> cur.execute(
-            "SELECT \
-                bidders.BidderID, \
-                bidders.FirstName, \
-                bidders.LastName, \
-                AVG(bids.Bid) AS AverageBid \
-            FROM \
-                (SELECT * FROM Bids WHERE BidderID > 2) AS bids \
-            FULL OUTER JOIN (SELECT * FROM Bidders WHERE BidderID < 6) AS bidders \
-                ON bids.BidderID = bidders.BidderID \
-            GROUP BY \
-                bidders.BidderID, \
-                bidders.FirstName, \
-                bidders.LastName \
-            ;"
-            )
->>> cur.fetchall()
-Traceback (most recent call last):
-
-  File "<ipython-input-91-309ed246d196>", line 1, in <module>
-    cur.execute(
-
-OperationalError: RIGHT and FULL OUTER JOINs are not currently supported
-
+```
+SELECT 
+    bidders.BidderID,
+    bidders.FirstName,
+    bidders.LastName,
+    AVG(bids.Bid) AS AverageBid
+FROM
+    (SELECT * FROM Bids WHERE BidderID > 2) AS bids
+FULL OUTER JOIN (SELECT * FROM Bidders WHERE BidderID < 6) AS bidders
+    ON bids.BidderID = bidders.BidderID
+GROUP BY 
+    bidders.BidderID,
+    bidders.FirstName,
+    bidders.LastName
+;
 ```
 
 As with ```RIGHT JOIN```s, sqlite3 does not have this functionality. 

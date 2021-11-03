@@ -1,51 +1,7 @@
 
-# Chapter 17: Databases
+# SQL in Python: Introduction
 
-In the last lecture, we learned about dictionaries as a precursor to 
-this chapter about databases. 
-I went through the following examples of databases in which
-your very own information is stored. 
-For example, the IRS keeps a record of your tax imformation by 
-recording amounts in the fields of your tax return, 
-your vital statistics, and the primary key is your social security number. 
-If you have a driver's license, the DMV keeps a record of your vehicles, 
-any tickets you may have received, your vital statistics, 
-and these are indexed by your driver's license number as the primary key. 
-The same is true for any online purchases you make: 
-your order details, your address and your purchase history 
-are all stored in a database with some form of customer id number and order number. 
-
-Here we will learn one way that this sort of information can be stored, 
-retrieved and organized. 
-Businesses rely heavily on databases to keep track of information 
-for many accounting and payroll functions.
-A primary reason for a business analyst or data scientist to use databases
-is to generate a dataset from the information stored in databases. 
-
-The primary tool that we will use is the Python module ```sqlite3```. 
-SQL is an acronym for *Structured Query Language*, 
-which is either pronounced "S-Q-L" or "sequel". 
-It is a language or, more precisely, a set of dialects that are used to 
-execute commands called *queries* using *relational databases*. 
-There exist many dialects of SQL and in fact, many other database structures
-that do not fall under the SQL paradigm. 
-However, SQL is ubiquitous in business and is a stepping stone to more advanced
-methods of interacting with databases.
-The dialect of SQL called ```sqlite3``` is a compact and versatile 
-set of infrastructure for executing SQL queries and interacting with databases. 
-Most of the important SQL commands can be executed in ```sqlite3```
-and, with a few exceptions, most of the syntax is identical 
-to that which you would use in another dialect of SQL. 
-
-There are other ways of executing commands to interact with databases:
-- *Typing commands into a database GUI:* You might have a graphical program, 
-in which you enter the SQL queries, 
-much like we do by running Python commands in Spyder.
-- *By writing programs in some language:* 
-These programs import a library of functions that allow you to interact with
-a database. Python is one of many languages in which this can be achieved. 
-
-We will follow the second approach, 
+In this section, we will use Python to interact with databases
 and the first step on this journey is to load the Python module ```sqlite3```. 
 
 

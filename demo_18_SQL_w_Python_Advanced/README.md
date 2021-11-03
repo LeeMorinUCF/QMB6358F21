@@ -1,5 +1,5 @@
 
-# Chapter 17: Databases
+# SQL in Python: Advanced Features
 
 
 ## Advanced Features
