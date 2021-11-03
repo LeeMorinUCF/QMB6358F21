@@ -14,7 +14,7 @@
 #
 # April 12, 2021
 #
-# More Examples with SQL and Databases
+# Examples with SQL and Databases
 # Using SQL Scripts
 #
 # This program provides examples of SQL commands

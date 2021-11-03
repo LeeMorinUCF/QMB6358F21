@@ -1,26 +1,26 @@
 #!/usr/bin/python
 """
 ##################################################
-# 
-# ECP 3004: Python for Business Analytics
-# 
+#
+# QMB 6358: Software for Business Analytics
+#
 # Using Databases with SQLite3
-# 
+#
 # Lealand Morin, Ph.D.
 # Assistant Professor
 # Department of Economics
 # College of Business Administration
 # University of Central Florida
-# 
+#
 # April 3, 2021
-# 
-# Chapter 17: Databases
+#
+# Practical Programming, Chapter 17: Databases
 # Part B: Advanced Features
-# 
+#
 # This program provides examples of SQL commands
-# including creating tables, selecting data, 
+# including creating tables, selecting data,
 # joining data and aggregating data.
-# 
+#
 ##################################################
 """
 
@@ -63,7 +63,7 @@ cur = con.cursor()
 
 
 
-# Now, where were we? 
+# Now, where were we?
 
 ##################################################
 # Aggregation
@@ -95,16 +95,16 @@ cur.fetchall()
 ##################################################
 
 # Now, let's consider the problem of comparing some values from a table
-# to other values drawn from the same table. 
-# This can be achieved using a *self-join*. 
+# to other values drawn from the same table.
+# This can be achieved using a *self-join*.
 # You treat two instances of tables drawn from the same root table
-# as separate tables that can be joined together, 
-# as you could with any other pair of tables. 
+# as separate tables that can be joined together,
+# as you could with any other pair of tables.
 
-# Suppose we want to find pairs of countries whose populations 
-# are close to each other--say, within 1,000 of each other. 
+# Suppose we want to find pairs of countries whose populations
+# are close to each other--say, within 1,000 of each other.
 
-# Our first attempt might look like this: 
+# Our first attempt might look like this:
 
 
 cur.execute('''SELECT Country FROM PopByCountry
@@ -116,17 +116,17 @@ cur.fetchall()
 # ('Greenland',), ('Mexico',), ('United States',)]
 
 
-# This is not what was wanted, for two reasons: 
+# This is not what was wanted, for two reasons:
 # - First, the phrase ```SELECT Country``` is going to return only one country per record, but we want pairs of countries.
-# - Second, Second, the expression 
+# - Second, Second, the expression
 # ```(ABS(Population - Population) < 1000)``` is always going to return zero
-# because it compares every population agains itself, line-by-line. 
-# Since they will all be zero, the query will return all the country names in the table. 
+# because it compares every population agains itself, line-by-line.
+# Since they will all be zero, the query will return all the country names in the table.
 
 
-# What we want to do is compare the population in each row with the populations 
-# of countries in other rows. 
-# To do this, we need to join ```PopByCountry``` with itself using an ```INNER JOIN```. 
+# What we want to do is compare the population in each row with the populations
+# of countries in other rows.
+# To do this, we need to join ```PopByCountry``` with itself using an ```INNER JOIN```.
 
 cur.execute('''
 SELECT A.Country, B.Country
@@ -141,29 +141,29 @@ cur.fetchall()
 
 
 # It is often more clear if you use the AS keyword
-# when defining an alias for a table. 
+# when defining an alias for a table.
 
 cur.execute('''
-SELECT 
-    pop1.Country AS Country1, 
+SELECT
+    pop1.Country AS Country1,
     pop2.Country AS Country2
-FROM   
-    PopByCountry AS pop1 
-    INNER JOIN 
+FROM
+    PopByCountry AS pop1
+    INNER JOIN
         PopByCountry AS pop2
-WHERE  
+WHERE
     (ABS(pop1.Population - pop2.Population) <= 1000)
-    AND    
+    AND
         (pop1.Country != pop2.Country)''')
 # <sqlite3.Cursor object at 0x102e3e490>
 cur.fetchall()
 
 
 
-# Notice that we used the absolute value function ```ABS()```. 
+# Notice that we used the absolute value function ```ABS()```.
 # Without this, the ```WHERE``` clause would also return other pairs
-# of countries where the second country is much larger than the first, 
-# i.e. where the difference ```A.Population - B.Population``` would be negative. 
+# of countries where the second country is much larger than the first,
+# i.e. where the difference ```A.Population - B.Population``` would be negative.
 
 
 
@@ -172,10 +172,10 @@ cur.fetchall()
 ##################################################
 
 
-# Instead of pulling from a table, you can replace 
-# the name of a table with a query that produces the required table. 
+# Instead of pulling from a table, you can replace
+# the name of a table with a query that produces the required table.
 
-# Example: Select the list of regions that do not have 
+# Example: Select the list of regions that do not have
 # a country with a population of 8,764,000.
 
 
@@ -187,8 +187,8 @@ cur.execute('''SELECT *
 cur.fetchall()
 
 
-# When you include the ```WHERE``` clause to exclude Hong Kong, 
-# it also excludes Hong Kong from the list of countries in that region. 
+# When you include the ```WHERE``` clause to exclude Hong Kong,
+# it also excludes Hong Kong from the list of countries in that region.
 
 
 cur.execute('''SELECT *
@@ -205,13 +205,13 @@ cur.execute('''SELECT DISTINCT Region
 
 cur.fetchall()
 # Notice the mistake: Hong Kong does have a population of 8,764,000
-# but Eastern Asia is still included. 
+# but Eastern Asia is still included.
 
 
-# As an intermediate step, create a query that creates a table that 
+# As an intermediate step, create a query that creates a table that
 # lists the Regions that do have a country with a population of 8,764,000.
 
-# These are the other rows of the table. 
+# These are the other rows of the table.
 cur.execute('''
 SELECT DISTINCT Region
 FROM PopByCountry
@@ -220,7 +220,7 @@ WHERE (PopByCountry.Population = 8764)
 cur.fetchall()
 
 
-# Now nest this within the table for the nested query. 
+# Now nest this within the table for the nested query.
 cur.execute('''
 SELECT DISTINCT Region
 FROM PopByCountry
@@ -232,15 +232,15 @@ WHERE Region NOT IN
 
 cur.fetchall()
 
-# The bracketed expression is a query that produces a table, 
-# which is then passed to the nesting query, 
-# much like the way you pass a calculated expression as an argument 
+# The bracketed expression is a query that produces a table,
+# which is then passed to the nesting query,
+# much like the way you pass a calculated expression as an argument
 # to another function.
 
-# Close the connection when finished. 
+# Close the connection when finished.
 # con.close()
 
-# If you want to save that progress, 
+# If you want to save that progress,
 # make sure to commit before closing the connection.
 
 # con.commit()
@@ -252,18 +252,18 @@ cur.fetchall()
 ##################################################
 
 #--------------------------------------------------
-### Example 1: Population, Area 
+### Example 1: Population, Area
 ###     and Population Density of Provinces
 #--------------------------------------------------
 
-# In this example, we will create a table 
+# In this example, we will create a table
 # to store the population and land area of the provinces and
-# territories of Canada, according to the 2001 census with Statistics Canada. 
+# territories of Canada, according to the 2001 census with Statistics Canada.
 
 
 # a. Create a new database called census.db.
 
-# You would import some kind of API 
+# You would import some kind of API
 # to interact with the database
 # We will continue using sqlite3
 import sqlite3 as dbapi
@@ -271,10 +271,10 @@ con = dbapi.connect('census.db')
 
 
 
-# b. Make a database table called Density that will 
-# hold the name of the province or territory (TEXT), 
-# the population (INTEGER), 
-# and the land area (REAL). 
+# b. Make a database table called Density that will
+# hold the name of the province or territory (TEXT),
+# the population (INTEGER),
+# and the land area (REAL).
 
 
 cur = con.cursor()
@@ -283,7 +283,7 @@ cur.execute('''CREATE TABLE Density(Province TEXT,
 con.commit()
 
 
-# c. Insert the data from the table above. 
+# c. Insert the data from the table above.
 
 table = [
  ('Newfoundland and Labrador', 512930, 370501.69),
@@ -312,7 +312,7 @@ for row in cur.fetchall():
  print(row)
 
 
-# e. Retrieve the populations. 
+# e. Retrieve the populations.
 
 cur.execute('SELECT Population FROM Density')
 for row in cur.fetchall():
@@ -320,7 +320,7 @@ for row in cur.fetchall():
 
 
 
-# f. Retrieve the provinces that have populations of less than one million. 
+# f. Retrieve the provinces that have populations of less than one million.
 
 
 cur.execute('''SELECT Province FROM Density
@@ -330,7 +330,7 @@ for row in cur.fetchall():
 
 
 # g. Retrieve the provinces that have populations of less than one million
-# or greater than five million. 
+# or greater than five million.
 
 
 cur.execute('''SELECT Province FROM Density
@@ -341,7 +341,7 @@ for row in cur.fetchall():
 
 
 # h. Retrieve the provinces that *do not* have populations of less than one million
-# or greater than five million. 
+# or greater than five million.
 
 
 cur.execute('''SELECT Province FROM Density
@@ -352,7 +352,7 @@ for row in cur.fetchall():
 
 
 # i. Retrieve the populations of provinces that have a land area
-# greater than 200,000 square kilometers. 
+# greater than 200,000 square kilometers.
 
 
 cur.execute('''SELECT Population FROM Density
@@ -363,7 +363,7 @@ for row in cur.fetchall():
 
 
 # j. Retrieve the provinces along with their population densities
-# (population divided by land area). 
+# (population divided by land area).
 
 
 cur.execute('SELECT Province, Population / Area FROM Density')
@@ -376,13 +376,13 @@ for row in cur.fetchall():
 ### Example 2: Population of Capital Cities
 #--------------------------------------------------
 
-# Now add a new table called Capitals to the database. 
-# Capitals has three columns: 
+# Now add a new table called Capitals to the database.
+# Capitals has three columns:
 # province/territory (TEXT),
-# capital (TEXT), and population (INTEGER). 
+# capital (TEXT), and population (INTEGER).
 
 # We are continuing from above
-# but if we started another session, 
+# but if we started another session,
 # we would have to reopen and reconnect to the database.
 # import sqlite3 as dbapi
 # con = dbapi.connect('census.db')
@@ -415,7 +415,7 @@ con.commit()
 
 
 
-# a. Retrieve the contents of the table. 
+# a. Retrieve the contents of the table.
 
 
 cur.execute('SELECT * FROM Capitals')
@@ -423,9 +423,9 @@ for row in cur.fetchall():
  print(row)
 
 
-# b. Retrieve the populations of the provinces and capitals 
-# (in a list of tuples of the form 
-# [province_population, capital_population]). 
+# b. Retrieve the populations of the provinces and capitals
+# (in a list of tuples of the form
+# [province_population, capital_population]).
 
 
 cur.execute('''SELECT Density.Population, Capitals.Population
@@ -435,8 +435,8 @@ for row in cur.fetchall():
  print(row)
 
 
-# c. Retrieve the land area of the provinces whose capitals 
-# have populations greater than 100,000. 
+# c. Retrieve the land area of the provinces whose capitals
+# have populations greater than 100,000.
 
 
 cur.execute('''SELECT Density.Area
@@ -450,7 +450,7 @@ for row in cur.fetchall():
 
 # d. Retrieve the provinces with land densities
 # less than two people per square kilometer
-# and capital city populations more than 500,000. 
+# and capital city populations more than 500,000.
 
 
 
@@ -464,36 +464,36 @@ for row in cur.fetchall():
 
 # Note: This query doesn't return any results.
 
-# e. Retrieve the total land area of Canada. 
+# e. Retrieve the total land area of Canada.
 
 
 cur.execute('SELECT SUM(Area) FROM Density')
 print(cur.fetchone())
 
 
-# f. Retrieve the average population of the capital cities. 
+# f. Retrieve the average population of the capital cities.
 
 
 cur.execute('SELECT AVG(Population) FROM Capitals')
 print(cur.fetchone())
 
 
-# g. Retrieve the lowest population of the capital cities. 
+# g. Retrieve the lowest population of the capital cities.
 
 
 cur.execute('SELECT MIN(Population) FROM Capitals')
 print(cur.fetchone())
 
 
-# h. Retrieve the highest population of the provinces or territories. 
+# h. Retrieve the highest population of the provinces or territories.
 
 cur.execute('SELECT MAX(Population) FROM Density')
 print(cur.fetchone())
 
 
-# i. Retrieve the provinces that have land densities within 0.5 persons 
-# per square kilometer of one another. 
-# Have each pair of provinces reported only once. 
+# i. Retrieve the provinces that have land densities within 0.5 persons
+# per square kilometer of one another.
+# Have each pair of provinces reported only once.
 
 
 cur.execute('''SELECT A.Province, B.Province
@@ -508,7 +508,7 @@ for row in cur.fetchall():
 
 # Check for yourself:
 cur.execute('''SELECT A.Province, A.Population / A.Area AS PopDensity
- FROM Density A 
+ FROM Density A
  ORDER BY PopDensity''')
 for row in cur.fetchall():
  print(row)
@@ -520,11 +520,11 @@ for row in cur.fetchall():
 ##################################################
 
 
-# The commit method saves the changes. 
+# The commit method saves the changes.
 con.commit()
 
 
-# Close the connection when finished. 
+# Close the connection when finished.
 con.close()
 
 # Then we can continue with this file when you have time
@@ -551,5 +551,3 @@ con.close()
 ##################################################
 # End
 ##################################################
-
-

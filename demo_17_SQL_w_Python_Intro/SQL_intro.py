@@ -1,33 +1,33 @@
 #!/usr/bin/python
 """
 ##################################################
-# 
-# ECP 3004: Python for Business Analytics
-# 
+#
+# QMB 6358: Software for Business Analytics
+#
 # Using Databases with SQLite3
-# 
+#
 # Lealand Morin, Ph.D.
 # Assistant Professor
 # Department of Economics
 # College of Business Administration
 # University of Central Florida
-# 
+#
 # April 3, 2021
-# 
-# Chapter 17: Databases
+#
+# Practical Programming, Chapter 17: Databases
 # Part A: Creating Tables and Retreiving Data
-# 
+#
 # This program provides examples of SQL commands
-# including creating tables, selecting data, 
+# including creating tables, selecting data,
 # joining data and aggregating data.
-# 
+#
 ##################################################
 """
 
 # SQL is not case sensitive but there are conventions.
 # KEYWORDS ARE USUALLY IN "UPPER CASE".
 # Names of Tables, Columns And Variables
-# Are Usually In "CamelCase". 
+# Are Usually In "CamelCase".
 
 # In contrast, Python is usually written in "snake_case".
 
@@ -71,7 +71,7 @@ cur = con.cursor()
 # Create a table.
 cur.execute('CREATE TABLE PopByRegion(Region TEXT, Population INTEGER)')
 
-# Insert some values into the table. 
+# Insert some values into the table.
 cur.execute('INSERT INTO PopByRegion VALUES("Central Africa", 330993)')
 cur.execute('INSERT INTO PopByRegion VALUES("Southeastern Africa", 743112)')
 cur.execute('INSERT INTO PopByRegion VALUES("Northern Africa", 1037463)')
@@ -86,10 +86,10 @@ cur.execute('INSERT INTO PopByRegion VALUES("Western Europe", 387933)')
 cur.execute('INSERT INTO PopByRegion VALUES("Japan", 100562)')
 
 
-# The commit method saves the changes. 
+# The commit method saves the changes.
 con.commit()
 
-# Close the connection when finished. 
+# Close the connection when finished.
 con.close()
 
 
@@ -105,7 +105,7 @@ con.close()
 con = sqlite3.connect('population.db')
 # Create a cursor object from which to execute SQL commands.
 cur = con.cursor()
-# This is what you would do for an existing database. 
+# This is what you would do for an existing database.
 
 
 
@@ -178,7 +178,7 @@ for c in countries:
     cur.execute('INSERT INTO PopByCountry VALUES (?, ?, ?)', (c[0], c[1],
                 c[2]))
 
-# As above, the commit method saves the changes. 
+# As above, the commit method saves the changes.
 con.commit()
 
 
@@ -231,7 +231,7 @@ WHERE (PopByRegion.Region = PopByCountry.Region)
 AND ((PopByCountry.Population * 1.0) / PopByRegion.Population > 0.10)''')
 
 cur.fetchall()
-# Only unique values remain. 
+# Only unique values remain.
 
 
 
@@ -242,11 +242,11 @@ cur.fetchall()
 ##################################################
 
 
-# The commit method saves the changes. 
+# The commit method saves the changes.
 con.commit()
 
 
-# Close the connection when finished. 
+# Close the connection when finished.
 con.close()
 
 # Then we can continue with this file on the next lecture.
