@@ -49,12 +49,10 @@ import sqlite3
 # Find out the current directory.
 os.getcwd()
 # Change to a new directory.
-git_path = 'C:\\Users\\le279259\\Documents\\Teaching\\ECP3004_Spring_2021\\GitRepo\\ECP3004S21\\'
-os.chdir(git_path + 'demo_23_PP_Ch_17_Databases')
+git_path = 'C:\\Users\\le279259\\OneDrive - University of Central Florida\\Documents\\Teaching\\QMB6358_Fall_2021\\GitRepo\\QMB6358F21\\'
+os.chdir(git_path + 'demo_17_SQL_w_Python_Intro')
 # Check that the change was successful.
 os.getcwd()
-
-
 
 
 ##################################################
@@ -156,6 +154,8 @@ cur.execute('''SELECT Region FROM PopByRegion
                    WHERE Population > 1000000 AND Region < "L"''')
 cur.fetchall()
 # Notice how the < operator works on strings.
+
+
 
 
 ##################################################
