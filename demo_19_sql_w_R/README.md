@@ -436,8 +436,3 @@ But, then again, you might use this method to test
 the query on a small sample of data to get it working
 before you run it on the full database on another platform.
 
-
-##################################################
-# End
-##################################################
-
