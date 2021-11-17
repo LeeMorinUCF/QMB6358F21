@@ -43,8 +43,8 @@ import sqlite3
 # Find out the current directory.
 os.getcwd()
 # Change to a new directory.
-git_path = 'C:\\Users\\le279259\\Documents\\Teaching\\ECP3004_Spring_2021\\GitRepo\\ECP3004S21\\'
-os.chdir(git_path + 'demo_24_PP_Ch_17_Databases')
+git_path = 'C:\\Users\\le279259\\OneDrive - University of Central Florida\\Documents\\Teaching\\QMB6358_Fall_2021\\GitRepo\\QMB6358F21\\'
+os.chdir(git_path + 'demo_18_SQL_w_Python_Advanced')
 # Check that the change was successful.
 os.getcwd()
 
@@ -182,7 +182,7 @@ cur.fetchall()
 
 
 
-# Information:
+# Recall the contents of the entire table:
 cur.execute('''SELECT *
                    FROM PopByCountry''')
 

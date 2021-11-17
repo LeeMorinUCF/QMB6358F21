@@ -118,9 +118,9 @@ Our first attempt might look like this:
 
 This is not what was wanted, for two reasons: 
 - First, the phrase ```SELECT Country``` is going to return only one country per record, but we want pairs of countries.
-- Second, Second, the expression 
+- Second, the expression 
 ```(ABS(Population - Population) < 1000)``` is always going to return zero
-because it compares every population agains itself, line-by-line. 
+because it compares every population against itself, line-by-line. 
 Since they will all be zero, the query will return all the country names in the table. 
 
 
