@@ -1,7 +1,7 @@
 /*
-    This query alculates the smallest, the average, and the
-    largest bids for every bidder. It also joins bidder 
-    names from the Bidders table. 
+    This query calculates the smallest, the average, and the
+    largest bids for every bidder. It also joins bidder
+    names from the Bidders table.
 */;
 
 
@@ -9,7 +9,7 @@
 .headers on
 .output ComputeBidSummariesAndJoinNames.out
 
-SELECT 
+SELECT
     bidders.FirstName  AS FirstName ,
     bidders.LastName   AS LastName ,
     MIN(bids.Bid)     AS SmallestBid ,
@@ -17,12 +17,12 @@ SELECT
     MAX(bids.Bid)     AS LargestBid
 FROM
     Bids bids
-INNER JOIN 
+INNER JOIN
     Bidders bidders
     ON bids.BidderID = bidders.BidderID
-GROUP BY 
+GROUP BY
     bidders.FirstName ,
-    bidders.LastName 
+    bidders.LastName
 ;
 
 .output stdout

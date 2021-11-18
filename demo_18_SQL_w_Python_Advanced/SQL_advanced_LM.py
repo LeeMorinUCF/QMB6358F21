@@ -67,10 +67,17 @@ cur = con.cursor()
 
 # Now, where were we?
 cur.execute('''SELECT * FROM PopByCountry''')
-
+cur.fetchall()
+cur.execute('''SELECT * FROM PopByRegion''')
 cur.fetchall()
 
+
 cur.execute("PRAGMA table_info('PopByCountry')").fetchall()
+
+cur.execute("PRAGMA table_info('PopByRegion')").fetchall()
+
+
+# cur.execute("PRAGMA table_info('NameOfTable')").fetchall()
 
 
 
@@ -79,20 +86,26 @@ cur.execute("PRAGMA table_info('PopByCountry')").fetchall()
 ##################################################
 
 # Calculate the sum of the population, tabulated by Region.
-cur.execute('''SELECT Region, SUM (Population) FROM PopByCountry
+cur.execute('''SELECT Region, SUM(Population) FROM PopByCountry
+                   GROUP BY Region''')
+
+cur.fetchall()
+
+# Calculate the sum of the population, tabulated by Region.
+cur.execute('''SELECT SUM(Population) FROM PopByCountry
                    GROUP BY Region''')
 
 cur.fetchall()
 
 
 # Now restrict the calculation to North America.
-cur.execute('''SELECT SUM (Population) FROM PopByCountry
+cur.execute('''SELECT SUM(Population) FROM PopByCountry
                    WHERE Region = "North America"''')
 
 cur.fetchall()
 
 # Similarly for Eastern Asia.
-cur.execute('''SELECT SUM (Population) FROM PopByCountry
+cur.execute('''SELECT SUM(Population) FROM PopByCountry
                    WHERE Region = "Eastern Asia"''')
 
 cur.fetchall()
@@ -127,7 +140,7 @@ cur.fetchall()
 
 # This is not what was wanted, for two reasons:
 # - First, the phrase ```SELECT Country``` is going to return only one country per record, but we want pairs of countries.
-# - Second, Second, the expression
+# - Second, the expression
 # ```(ABS(Population - Population) < 1000)``` is always going to return zero
 # because it compares every population agains itself, line-by-line.
 # Since they will all be zero, the query will return all the country names in the table.
@@ -163,11 +176,12 @@ FROM
 WHERE
     (ABS(pop1.Population - pop2.Population) <= 1000)
     AND
-        (pop1.Country != pop2.Country)''')
+        (pop1.Country < pop2.Country)''')
 # <sqlite3.Cursor object at 0x102e3e490>
 cur.fetchall()
 
-
+# Note that only one copy of each pair is returned when 
+# using the < operator. 
 
 # Notice that we used the absolute value function ```ABS()```.
 # Without this, the ```WHERE``` clause would also return other pairs
@@ -192,6 +206,15 @@ cur.fetchall()
 # Recall the contents of the entire table:
 cur.execute('''SELECT *
                    FROM PopByCountry''')
+
+cur.fetchall()
+
+
+# Simple example.
+cur.execute('''SELECT *
+                   FROM (SELECT * FROM PopByCountry
+                         WHERE Population < 100000)
+                   WHERE Region = "Eastern Asia"''')
 
 cur.fetchall()
 
@@ -291,6 +314,9 @@ cur.execute('''CREATE TABLE Density(Province TEXT,
  Population INTEGER, Area REAL)''')
 con.commit()
 
+# Check the contents:
+cur.execute("PRAGMA table_info('Density')").fetchall()
+    
 
 # c. Insert the data from the table above.
 
