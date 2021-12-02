@@ -23,4 +23,4 @@ python3 assignment_09.py > A9_python.out
 
 
 
-
+Rscript assignment_09.R > A9_R.out
